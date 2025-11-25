@@ -3,26 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iGreen Energy - Economize até 30% na sua Conta de Luz</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
-            color: #fff;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
+    
         /* Banner de Indicação */
         .indicacao-banner {
             background: linear-gradient(135deg, #00ff00 0%, #00cc00 100%);
@@ -487,6 +468,18 @@
             color: #ff6b6b;
         }
 
+        /* Animação de pulso para CTA do vídeo */
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+        }
+
         .disclaimer {
             text-align: center;
             color: #888;
@@ -529,6 +522,7 @@
     <!-- Banner de Indicação -->
     <div class="indicacao-banner">
         <p>👤 INDICAÇÃO - <span class="nome-indicador">THAUANY AQUINO</span></p>
+        <p class="empresa">🏢 EMPRESA: IGREEN ENERGY</p>
     </div>
 
     <!-- Header com Logo -->
@@ -539,13 +533,25 @@
     <div class="container">
         <!-- Seção Hero -->
         <div class="hero-section">
-            <h1>⚡ CONEXÃO IGREEN ⚡</h1>
-            <p class="subtitle">CADASTRE SUA CONTA PARA TER DESCONTO TODOS OS MESES NA SUA CONTA DE ENERGIA</p>
-            
+            <h1>⚡ CONEXÃO GREEN ⚡</h1>
+            <p class="subtitle">Cadastre sua Conta para ter Desconto de até 30% na sua Conta de Energia</p>
         </div>
 
         <!-- Seção de Vídeo -->
         <div class="info-section">
+            <!-- Título e CTA para o vídeo -->
+            <div style="text-align: center; margin-bottom: 30px;">
+                <h2 style="color: #00ff00; font-size: 2.5em; margin-bottom: 15px; text-transform: uppercase;">
+                    🎬 Assista Este Vídeo de 1 Minuto
+                </h2>
+                <p style="color: #fff; font-size: 1.5em; font-weight: 600; margin-bottom: 10px;">
+                    Descubra Como Economizar Até 30% na Sua Conta de Luz
+                </p>
+                <p style="color: #00ff00; font-size: 1.2em; animation: pulse 2s infinite;">
+                    ⬇️ APERTE O PLAY AGORA ⬇️
+                </p>
+            </div>
+
             <div class="video-container">
                 <div style="padding: 56.25% 0 0 0; position: relative;">
                     <iframe 
