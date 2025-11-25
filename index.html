@@ -58,7 +58,8 @@
         }
 
         .logo {
-            width: 120px;
+            max-width: 300px;
+            width: 100%;
             height: auto;
             margin-bottom: 10px;
         }
@@ -533,7 +534,7 @@
 
     <!-- Header com Logo -->
     <div class="header">
-        <img src="https://via.placeholder.com/120x120/00ff00/000000?text=iGreen" alt="iGreen Energy" class="logo" id="logoImage">
+        <img src="logobrand.png" alt="iGreen Energy" class="logo">
     </div>
 
     <div class="container">
@@ -548,7 +549,7 @@
             <div class="video-container">
                 <div style="padding: 56.25% 0 0 0; position: relative;">
                     <iframe 
-                        src="https://streamable.com/0w0hy9" 
+                        src="https://streamable.com/e/0w0hy9" 
                         frameborder="0" 
                         allowfullscreen 
                         style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 15px;">
@@ -556,6 +557,13 @@
                 </div>
             </div>
             <p class="disclaimer">Consulte regras e condições. Desconto flexível para cada estado.</p>
+            
+            <!-- Botão CTA após vídeo -->
+            <div style="text-align: center; margin-top: 40px;">
+                <button class="cta-button" onclick="showForm()">
+                    ⚡ QUERO MEU DESCONTO ⚡
+                </button>
+            </div>
         </div>
 
         <!-- Como Funciona -->
@@ -586,6 +594,13 @@
                     <h3>💰 Você Economiza</h3>
                     <p>Sem investimentos e com desconto garantido todo mês</p>
                 </div>
+            </div>
+
+            <!-- Botão CTA após Como Funciona -->
+            <div style="text-align: center; margin-top: 50px;">
+                <button class="cta-button" onclick="showForm()">
+                    ⚡ QUERO MEU DESCONTO ⚡
+                </button>
             </div>
         </div>
 
@@ -897,12 +912,6 @@
             document.getElementById('fileNameVerso').textContent = 'Nenhum arquivo selecionado';
             document.getElementById('fileNameVerso').style.color = '#888';
         }
-
-        // Carregar logo real se disponível
-        window.addEventListener('load', function() {
-            const logoUrl = '/mnt/user-data/uploads/1763602341488_image.png';
-            document.getElementById('logoImage').src = logoUrl;
-        });
     </script>
 </body>
 </html>
