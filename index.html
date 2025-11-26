@@ -918,6 +918,85 @@
             formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
+        // Mostrar página de agradecimento
+        function showThankYouPage(cadastroId) {
+            const container = document.querySelector('.container');
+            
+            // Criar página de agradecimento
+            const thankYouHTML = `
+                <div class="thank-you-page" style="
+                    background: rgba(255, 255, 255, 0.05);
+                    padding: 60px 30px;
+                    border-radius: 15px;
+                    max-width: 700px;
+                    margin: 50px auto;
+                    text-align: center;
+                    backdrop-filter: blur(10px);
+                    animation: fadeIn 0.5s ease;
+                ">
+                    <div style="
+                        background: linear-gradient(135deg, #00ff00 0%, #00cc00 100%);
+                        width: 100px;
+                        height: 100px;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin: 0 auto 30px;
+                        font-size: 3em;
+                    ">✅</div>
+                    
+                    <h2 style="color: #00ff00; font-size: 2.5em; margin-bottom: 20px;">
+                        Cadastro Enviado com Sucesso!
+                    </h2>
+                    
+                    <p style="color: #fff; font-size: 1.2em; margin-bottom: 15px;">
+                        <strong>ID do Cadastro:</strong> ${cadastroId}
+                    </p>
+                    
+                    <p style="color: #e0e0e0; font-size: 1.1em; margin-bottom: 30px; line-height: 1.6;">
+                        Seus documentos foram recebidos e armazenados com segurança.<br>
+                        Agora fale diretamente com nossa equipe para finalizar sua economia!
+                    </p>
+                    
+                    <a href="https://wa.me/5582920009023?text=Olá!%20Acabei%20de%20fazer%20meu%20cadastro%20iGreen%20Energy,%20qual%20é%20o%20próximo%20passo?%20-%20ID:%20${cadastroId}" 
+                       target="_blank"
+                       style="
+                           display: inline-block;
+                           background: linear-gradient(135deg, #00ff00 0%, #00cc00 100%);
+                           color: #000;
+                           font-size: 1.5em;
+                           font-weight: bold;
+                           padding: 20px 40px;
+                           border: none;
+                           border-radius: 50px;
+                           text-decoration: none;
+                           box-shadow: 0 10px 40px rgba(0, 255, 0, 0.5);
+                           transition: all 0.3s ease;
+                           text-transform: uppercase;
+                           letter-spacing: 1px;
+                       "
+                       onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 15px 50px rgba(0, 255, 0, 0.7)';"
+                       onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 10px 40px rgba(0, 255, 0, 0.5)';">
+                        💬 FALAR COM NOSSA EQUIPE NO WHATSAPP
+                    </a>
+                    
+                    <p style="color: #888; font-size: 0.9em; margin-top: 30px;">
+                        Clique no botão acima para conversar diretamente pelo WhatsApp
+                    </p>
+                </div>
+            `;
+            
+            // Adicionar ao container
+            container.innerHTML += thankYouHTML;
+            
+            // Scroll suave até a página de agradecimento
+            document.querySelector('.thank-you-page').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center' 
+            });
+        }
+
         // Toggle FAQ
         function toggleFaq(element) {
             const faqItem = element.parentElement;
@@ -1105,11 +1184,13 @@
                 updateProgress(100);
                 
                 setTimeout(() => {
-                    alert('✅ Cadastro enviado com sucesso!\n\n' +
-                          'ID: ' + data[0].id + '\n\n' +
-                          'Documentos recebidos e armazenados com segurança.\n\n' +
-                          'Em breve nossa equipe entrará em contato pelo WhatsApp informado.');
+                    // Ocultar formulário
+                    document.getElementById('formSection').style.display = 'none';
                     
+                    // Mostrar página de agradecimento
+                    showThankYouPage(data[0].id);
+                    
+                    // Resetar formulário para próximo uso
                     event.target.reset();
                     document.getElementById('fileNameFrente').textContent = 'Nenhum arquivo selecionado';
                     document.getElementById('fileNameFrente').style.color = '#888';
