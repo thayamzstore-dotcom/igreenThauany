@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>iGreen Energy - Economize até 30% na sua Conta de Luz</title>
+    
+    <!-- Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <style>
         * {
             margin: 0;
@@ -51,11 +54,6 @@
             font-weight: 900;
         }
 
-        .indicacao-banner .empresa {
-            font-size: 1.1em;
-            color: #fff;
-        }
-
         /* Header com Logo */
         .header {
             text-align: center;
@@ -70,31 +68,6 @@
             margin: 0;
         }
 
-        /* Seção Hero - Informativa */
-        .hero-section {
-            background: linear-gradient(135deg, #00ff00 0%, #00cc00 100%);
-            padding: 60px 20px;
-            text-align: center;
-            margin: 30px 0;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 255, 0, 0.3);
-        }
-
-        .hero-section h1 {
-            font-size: 3em;
-            color: #000;
-            margin-bottom: 20px;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.3);
-        }
-
-        .hero-section .subtitle {
-            font-size: 1.5em;
-            color: #1a1a1a;
-            margin-bottom: 30px;
-            font-weight: 600;
-        }
-
         /* Área de Conteúdo Informativo */
         .info-section {
             background: rgba(255, 255, 255, 0.05);
@@ -102,14 +75,6 @@
             border-radius: 0;
             margin: 0;
             backdrop-filter: blur(10px);
-        }
-
-        .info-section h2 {
-            color: #00ff00;
-            font-size: 2.2em;
-            margin-bottom: 30px;
-            text-align: center;
-            text-transform: uppercase;
         }
 
         .video-container {
@@ -370,9 +335,14 @@
             letter-spacing: 2px;
         }
 
-        .cta-button:hover {
+        .cta-button:hover:not(:disabled) {
             transform: scale(1.05);
             box-shadow: 0 15px 50px rgba(0, 255, 0, 0.7);
+        }
+
+        .cta-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
         /* Formulário */
@@ -405,6 +375,13 @@
         .form-section h2 {
             color: #00ff00;
             font-size: 2em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .form-section .subtitle {
+            color: #e0e0e0;
+            font-size: 1.1em;
             margin-bottom: 30px;
             text-align: center;
         }
@@ -484,9 +461,14 @@
             transition: all 0.3s ease;
         }
 
-        .submit-button:hover {
+        .submit-button:hover:not(:disabled) {
             transform: translateY(-3px);
             box-shadow: 0 10px 30px rgba(0, 255, 0, 0.5);
+        }
+
+        .submit-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
         .required {
@@ -494,38 +476,38 @@
         }
 
         .upload-progress {
-    display: none;
-    margin-top: 15px;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
-    padding: 15px;
-}
+            display: none;
+            margin-top: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            padding: 15px;
+        }
 
-.upload-progress.active {
-    display: block;
-}
+        .upload-progress.active {
+            display: block;
+        }
 
-.progress-bar {
-    width: 100%;
-    height: 20px;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
-    overflow: hidden;
-    margin: 10px 0;
-}
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
 
-.progress-fill {
-    height: 100%;
-    background: linear-gradient(135deg, #00ff00 0%, #00cc00 100%);
-    transition: width 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #000;
-    font-weight: bold;
-    font-size: 0.8em;
-}
-        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #00ff00 0%, #00cc00 100%);
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: bold;
+            font-size: 0.8em;
+        }
+
         /* Animação de pulso para CTA do vídeo */
         @keyframes pulse {
             0%, 100% {
@@ -548,14 +530,6 @@
 
         /* Responsivo */
         @media (max-width: 768px) {
-            .hero-section h1 {
-                font-size: 1.8em;
-            }
-
-            .hero-section .subtitle {
-                font-size: 1.2em;
-            }
-
             .cta-button {
                 font-size: 1.5em;
                 padding: 20px 40px;
@@ -566,12 +540,31 @@
                 grid-template-columns: 1fr;
             }
 
-            .info-section h2,
             .como-funciona h2,
             .app-section h2,
             .vantagens-section h2,
             .faq-section h2 {
                 font-size: 1.8em;
+            }
+
+            .indicacao-banner {
+                padding: 8px 15px;
+            }
+
+            .indicacao-banner .licenciada {
+                font-size: 0.75em;
+            }
+
+            .indicacao-banner .nome-indicador {
+                font-size: 1.1em;
+            }
+
+            .header {
+                padding: 10px 0;
+            }
+
+            .logo {
+                max-width: 200px;
             }
         }
     </style>
@@ -591,7 +584,6 @@
     <div class="container">
         <!-- Seção de Vídeo -->
         <div class="info-section">
-            <!-- Título e CTA para o vídeo -->
             <div style="text-align: center; margin-bottom: 30px;">
                 <h2 style="color: #00ff00; font-size: 2.3em; margin-bottom: 10px; text-transform: uppercase; font-weight: bold;">
                     ASSISTA ESTE VÍDEO DE 1 MINUTO
@@ -616,7 +608,6 @@
             </div>
             <p class="disclaimer">Após o cadastro nossa equipe irá entrar em contato.</p>
             
-            <!-- Botão CTA após vídeo -->
             <div style="text-align: center; margin-top: 30px;">
                 <button class="cta-button" onclick="showForm()">
                     QUERO MEU DESCONTO
@@ -631,7 +622,7 @@
             <div class="processo-steps">
                 <div class="step-card">
                     <div class="step-number">1</div>
-                    <h3>🌾Energia Gerada nas Fazendas Solares</h3>
+                    <h3>🌾 Energia Gerada nas Fazendas Solares</h3>
                     <p>A energia solar é produzida em fazendas solares especializadas da iGreen</p>
                 </div>
 
@@ -654,7 +645,6 @@
                 </div>
             </div>
 
-            <!-- Botão CTA após Como Funciona -->
             <div style="text-align: center; margin-top: 30px;">
                 <button class="cta-button" onclick="showForm()">
                     QUERO MEU DESCONTO
@@ -678,7 +668,7 @@
 
             <div style="text-align: center; margin-top: 40px;">
                 <p style="color: #00ff00; font-size: 1.2em; margin-bottom: 20px;">Disponível para download:</p>
-                <p style="font-size: 1.5em;"> Google Play | App Store</p>
+                <p style="font-size: 1.5em;">📱 Google Play | 🍎 App Store</p>
             </div>
         </div>
 
@@ -828,7 +818,7 @@
             </div>
         </div>
 
-        <!-- Botão CTA -->
+        <!-- Botão CTA Final -->
         <div class="cta-section">
             <button class="cta-button" onclick="showForm()">
                 ⚡ QUERO MEU DESCONTO ⚡
@@ -837,41 +827,42 @@
 
         <!-- Formulário de Cadastro -->
         <div class="form-section" id="formSection">
-            <h2>📋 Cadastre-se Agora e Garanta sua Economia!</h2>
+            <h2>📋 Cadastre-se Agora!</h2>
+            <p class="subtitle">Preencha os dados do TITULAR DA CONTA DE ENERGIA</p>
             
             <form id="cadastroForm" onsubmit="handleSubmit(event)">
                 <div class="form-group">
-                    <label for="nome">Nome Completo do Titular da Conta <span class="required">*</span></label>
-                    <input type="text" id="nome" name="nome" placeholder="Digite o nome completo" required>
+                    <label for="nome">Nome Completo do Titular <span class="required">*</span></label>
+                    <input type="text" id="nome" name="nome" placeholder="Digite o nome completo do titular" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="consumo">Valor Médio de Consumo (em R$) <span class="required">*</span></label>
-                    <input type="number" id="consumo" name="consumo" placeholder="Ex: 250" step="0.01" required>
+                    <label for="email">E-mail Válido do Titular <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" placeholder="exemplo@email.com" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="baixaRenda">Está cadastrado no Baixa Renda? <span class="required">*</span></label>
-                    <select id="baixaRenda" name="baixaRenda" required>
-                        <option value="">Selecione uma opção</option>
-                        <option value="sim">✅ Sim</option>
-                        <option value="nao">❌ Não</option>
-                    </select>
+                    <label for="whatsapp1">WhatsApp do Titular da Conta <span class="required">*</span></label>
+                    <input type="tel" id="whatsapp1" name="whatsapp1" placeholder="(00) 00000-0000" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="whatsapp">Telefone WhatsApp para Contato <span class="required">*</span></label>
-                    <input type="tel" id="whatsapp" name="whatsapp" placeholder="(00) 00000-0000" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">E-mail <span class="required">*</span></label>
-                    <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+                    <label for="whatsapp2">WhatsApp Adicional (opcional)</label>
+                    <input type="tel" id="whatsapp2" name="whatsapp2" placeholder="(00) 00000-0000">
                 </div>
 
                 <div class="form-group">
                     <label for="cep">CEP <span class="required">*</span></label>
                     <input type="text" id="cep" name="cep" placeholder="00000-000" maxlength="9" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="baixaRenda">A conta está cadastrada no Baixa Renda? <span class="required">*</span></label>
+                    <select id="baixaRenda" name="baixaRenda" required>
+                        <option value="">Selecione uma opção</option>
+                        <option value="sim">✅ Sim</option>
+                        <option value="nao">❌ Não</option>
+                    </select>
                 </div>
 
                 <div class="form-group">
@@ -895,16 +886,16 @@
                         </label>
                     </div>
                 </div>
-                
-<!-- Barra de progresso -->
-<div class="upload-progress" id="uploadProgress">
-    <p style="color: #00ff00; text-align: center; margin-bottom: 10px;">Fazendo upload das imagens...</p>
-    <div class="progress-bar">
-        <div class="progress-fill" id="progressFill" style="width: 0%;">0%</div>
-    </div>
-</div>
-                
-                <button type="submit" class="submit-button">
+
+                <!-- Barra de progresso -->
+                <div class="upload-progress" id="uploadProgress">
+                    <p style="color: #00ff00; text-align: center; margin-bottom: 10px;">Fazendo upload das imagens...</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 0%;">0%</div>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-button" id="submitBtn">
                     🚀 ENVIAR CADASTRO E GARANTIR DESCONTO
                 </button>
             </form>
@@ -912,234 +903,30 @@
     </div>
 
     <script>
-        // Configuração do Supabase
-const SUPABASE_URL = 'https://azsrpwrlzsficdcsegtm.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF6c3Jwd3JsenNmaWNkY3NlZ3RtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQwNjgwOTcsImV4cCI6MjA3OTY0NDA5N30.58FP_hRQF9enjhD4X7GERvX5ww65rnnvLonVEy42mDI';
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        // ====================================
+        // CONFIGURAÇÃO DO SUPABASE
+        // ====================================
+        const SUPABASE_URL = 'https://azsrpwrlzsficdcsegtm.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF6c3Jwd3JsenNmaWNkY3NlZ3RtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQwNjgwOTcsImV4cCI6MjA3OTY0NDA5N30.58FP_hRQF9enjhD4X7GERvX5ww65rnnvLonVEy42mDI';
+        
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
         // Mostrar formulário ao clicar no CTA
         function showForm() {
-            document.getElementById('formSection').classList.add('active');
-            document.getElementById('formSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            const formSection = document.getElementById('formSection');
+            formSection.classList.add('active');
+            formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
-        // Função para comprimir imagem
-async function compressImage(file, maxSizeMB = 1) {
-    return new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = (event) => {
-            const img = new Image();
-            img.src = event.target.result;
-            img.onload = () => {
-                const canvas = document.createElement('canvas');
-                let width = img.width;
-                let height = img.height;
-                
-                const MAX_WIDTH = 1920;
-                const MAX_HEIGHT = 1920;
-                
-                if (width > height) {
-                    if (width > MAX_WIDTH) {
-                        height *= MAX_WIDTH / width;
-                        width = MAX_WIDTH;
-                    }
-                } else {
-                    if (height > MAX_HEIGHT) {
-                        width *= MAX_HEIGHT / height;
-                        height = MAX_HEIGHT;
-                    }
-                }
-                
-                canvas.width = width;
-                canvas.height = height;
-                
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0, width, height);
-                
-                canvas.toBlob((blob) => {
-                    resolve(new File([blob], file.name, {
-                        type: 'image/jpeg',
-                        lastModified: Date.now()
-                    }));
-                }, 'image/jpeg', 0.8);
-            };
-        };
-    });
-}
-
-// Fazer upload de imagem
-async function uploadImage(file, tipo) {
-    try {
-        const compressedFile = await compressImage(file);
-        
-        const timestamp = Date.now();
-        const random = Math.random().toString(36).substring(7);
-        const fileName = `rg_${tipo}_${timestamp}_${random}.jpg`;
-        
-        const { data, error } = await supabase.storage
-            .from('rg-documentos')
-            .upload(fileName, compressedFile, {
-                cacheControl: '3600',
-                upsert: false
-            });
-        
-        if (error) throw error;
-        
-        const { data: { publicUrl } } = supabase.storage
-            .from('rg-documentos')
-            .getPublicUrl(fileName);
-        
-        return publicUrl;
-    } catch (error) {
-        console.error('Erro no upload:', error);
-        throw error;
-    }
-}
-
-// Atualizar progresso
-function updateProgress(percent) {
-    const progressFill = document.getElementById('progressFill');
-    progressFill.style.width = percent + '%';
-    progressFill.textContent = Math.round(percent) + '%';
-}
-
-
-async function handleSubmit(event) {
-    event.preventDefault();
-    
-    const submitBtn = event.target.querySelector('button[type="submit"]');
-    const progressDiv = document.getElementById('uploadProgress');
-    const originalText = submitBtn.textContent;
-    
-    submitBtn.disabled = true;
-    submitBtn.textContent = '⏳ PROCESSANDO...';
-    progressDiv.classList.add('active');
-    updateProgress(0);
-    
-    try {
-        const formData = new FormData(event.target);
-        
-        const rgFrente = formData.get('rgFrente');
-        const rgVerso = formData.get('rgVerso');
-        
-        if (!rgFrente || !rgVerso) {
-            throw new Error('Por favor, selecione as duas fotos do RG.');
-        }
-        
-        if (rgFrente.size > 5 * 1024 * 1024 || rgVerso.size > 5 * 1024 * 1024) {
-            throw new Error('As imagens devem ter no máximo 5MB cada.');
-        }
-        
-        updateProgress(10);
-        
-        submitBtn.textContent = '📤 Enviando RG Frente...';
-        const urlFrente = await uploadImage(rgFrente, 'frente');
-        updateProgress(40);
-        
-        submitBtn.textContent = '📤 Enviando RG Verso...';
-        const urlVerso = await uploadImage(rgVerso, 'verso');
-        updateProgress(70);
-        
-        submitBtn.textContent = '💾 Salvando cadastro...';
-        const cadastro = {
-            nome_completo: formData.get('nome'),
-            valor_consumo: parseFloat(formData.get('consumo')),
-            baixa_renda: formData.get('baixaRenda'),
-            whatsapp: formData.get('whatsapp'),
-            email: formData.get('email'),
-            cep: formData.get('cep'),
-            rg_frente_url: urlFrente,
-            rg_verso_url: urlVerso
-        };
-        
-        updateProgress(80);
-        
-        const { data, error } = await supabase
-            .from('cadastros_igreen')
-            .insert([cadastro])
-            .select();
-        
-        if (error) throw error;
-        
-        updateProgress(100);
-        
-        setTimeout(() => {
-            alert('✅ Cadastro enviado com sucesso!\n\nID: ' + data[0].id + '\n\nDocumentos recebidos e armazenados com segurança.\n\nEm breve nossa equipe entrará em contato pelo WhatsApp informado.');
-            
-            event.target.reset();
-            document.getElementById('fileNameFrente').textContent = 'Nenhum arquivo selecionado';
-            document.getElementById('fileNameFrente').style.color = '#888';
-            document.getElementById('fileNameVerso').textContent = 'Nenhum arquivo selecionado';
-            document.getElementById('fileNameVerso').style.color = '#888';
-            progressDiv.classList.remove('active');
-        }, 500);
-        
-    } catch (error) {
-        console.error('Erro:', error);
-        
-        let errorMessage = '❌ Erro ao enviar cadastro.\n\n';
-        
-        if (error.message.includes('Failed to fetch')) {
-            errorMessage += 'Verifique sua conexão com a internet.';
-        } else if (error.message.includes('storage')) {
-            errorMessage += 'Erro no upload das imagens. Verifique se configurou o Storage no Supabase.';
-        } else {
-            errorMessage += error.message;
-        }
-        
-        alert(errorMessage);
-        progressDiv.classList.remove('active');
-        
-    } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalText;
-    }
-}
-        
-        // Enviar para o Supabase
-        const { data, error } = await supabase
-            .from('cadastros_igreen')
-            .insert([cadastro])
-            .select();
-        
-        if (error) {
-            throw error;
-        }
-        
-        // Sucesso!
-        alert('✅ Cadastro enviado com sucesso!\n\nEm breve nossa equipe entrará em contato pelo WhatsApp informado.');
-        
-        // Resetar formulário
-        event.target.reset();
-        document.getElementById('fileNameFrente').textContent = 'Nenhum arquivo selecionado';
-        document.getElementById('fileNameFrente').style.color = '#888';
-        document.getElementById('fileNameVerso').textContent = 'Nenhum arquivo selecionado';
-        document.getElementById('fileNameVerso').style.color = '#888';
-        
-        // Reabilitar botão
-        submitBtn.disabled = false;
-        submitBtn.textContent = '🚀 ENVIAR CADASTRO E GARANTIR DESCONTO';
-        
-    } catch (error) {
-        console.error('Erro ao enviar cadastro:', error);
-        alert('❌ Erro ao enviar cadastro. Por favor, tente novamente.\n\nSe o problema persistir, entre em contato conosco.');
-        
-        // Reabilitar botão
-        submitBtn.disabled = false;
-        submitBtn.textContent = '🚀 ENVIAR CADASTRO E GARANTIR DESCONTO';
-    }
-}
         // Toggle FAQ
         function toggleFaq(element) {
             const faqItem = element.parentElement;
             const isActive = faqItem.classList.contains('active');
             
-            // Fechar todos os FAQs
             document.querySelectorAll('.faq-item').forEach(item => {
                 item.classList.remove('active');
             });
             
-            // Abrir o clicado se não estava ativo
             if (!isActive) {
                 faqItem.classList.add('active');
             }
@@ -1154,14 +941,17 @@ async function handleSubmit(event) {
         }
 
         // Máscara para telefone
-        document.getElementById('whatsapp').addEventListener('input', function(e) {
+        function applyPhoneMask(e) {
             let value = e.target.value.replace(/\D/g, '');
             if (value.length <= 11) {
                 value = value.replace(/^(\d{2})(\d)/g, '($1) $2');
                 value = value.replace(/(\d)(\d{4})$/, '$1-$2');
             }
             e.target.value = value;
-        });
+        }
+
+        document.getElementById('whatsapp1').addEventListener('input', applyPhoneMask);
+        document.getElementById('whatsapp2').addEventListener('input', applyPhoneMask);
 
         // Máscara para CEP
         document.getElementById('cep').addEventListener('input', function(e) {
@@ -1169,7 +959,186 @@ async function handleSubmit(event) {
             value = value.replace(/^(\d{5})(\d)/, '$1-$2');
             e.target.value = value;
         });
-        
+
+        // Função para comprimir imagem
+        async function compressImage(file) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = (event) => {
+                    const img = new Image();
+                    img.src = event.target.result;
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        let width = img.width;
+                        let height = img.height;
+                        
+                        const MAX_WIDTH = 1920;
+                        const MAX_HEIGHT = 1920;
+                        
+                        if (width > height) {
+                            if (width > MAX_WIDTH) {
+                                height *= MAX_WIDTH / width;
+                                width = MAX_WIDTH;
+                            }
+                        } else {
+                            if (height > MAX_HEIGHT) {
+                                width *= MAX_HEIGHT / height;
+                                height = MAX_HEIGHT;
+                            }
+                        }
+                        
+                        canvas.width = width;
+                        canvas.height = height;
+                        
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        
+                        canvas.toBlob((blob) => {
+                            resolve(new File([blob], file.name, {
+                                type: 'image/jpeg',
+                                lastModified: Date.now()
+                            }));
+                        }, 'image/jpeg', 0.8);
+                    };
+                };
+            });
+        }
+
+        // Fazer upload de imagem
+        async function uploadImage(file, tipo) {
+            try {
+                const compressedFile = await compressImage(file);
+                
+                const timestamp = Date.now();
+                const random = Math.random().toString(36).substring(7);
+                const fileName = `rg_${tipo}_${timestamp}_${random}.jpg`;
+                
+                const { data, error } = await supabase.storage
+                    .from('rg-documentos')
+                    .upload(fileName, compressedFile, {
+                        cacheControl: '3600',
+                        upsert: false
+                    });
+                
+                if (error) throw error;
+                
+                const { data: { publicUrl } } = supabase.storage
+                    .from('rg-documentos')
+                    .getPublicUrl(fileName);
+                
+                return publicUrl;
+            } catch (error) {
+                console.error('Erro no upload:', error);
+                throw error;
+            }
+        }
+
+        // Atualizar progresso
+        function updateProgress(percent) {
+            const progressFill = document.getElementById('progressFill');
+            progressFill.style.width = percent + '%';
+            progressFill.textContent = Math.round(percent) + '%';
+        }
+
+        // Manipular envio do formulário
+        async function handleSubmit(event) {
+            event.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const progressDiv = document.getElementById('uploadProgress');
+            const originalText = submitBtn.textContent;
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = '⏳ PROCESSANDO...';
+            progressDiv.classList.add('active');
+            updateProgress(0);
+            
+            try {
+                const formData = new FormData(event.target);
+                
+                const rgFrente = formData.get('rgFrente');
+                const rgVerso = formData.get('rgVerso');
+                
+                if (!rgFrente || !rgVerso || rgFrente.size === 0 || rgVerso.size === 0) {
+                    throw new Error('Por favor, selecione as duas fotos do RG.');
+                }
+                
+                if (rgFrente.size > 5 * 1024 * 1024 || rgVerso.size > 5 * 1024 * 1024) {
+                    throw new Error('As imagens devem ter no máximo 5MB cada.');
+                }
+                
+                updateProgress(10);
+                
+                submitBtn.textContent = '📤 Enviando RG Frente...';
+                const urlFrente = await uploadImage(rgFrente, 'frente');
+                updateProgress(40);
+                
+                submitBtn.textContent = '📤 Enviando RG Verso...';
+                const urlVerso = await uploadImage(rgVerso, 'verso');
+                updateProgress(70);
+                
+                submitBtn.textContent = '💾 Salvando cadastro...';
+                
+                const whatsapp2 = formData.get('whatsapp2') || 'Não informado';
+                
+                const cadastro = {
+                    nome_completo: formData.get('nome'),
+                    email: formData.get('email'),
+                    whatsapp: formData.get('whatsapp1'),
+                    whatsapp_adicional: whatsapp2,
+                    cep: formData.get('cep'),
+                    baixa_renda: formData.get('baixaRenda'),
+                    rg_frente_url: urlFrente,
+                    rg_verso_url: urlVerso
+                };
+                
+                updateProgress(80);
+                
+                const { data, error } = await supabase
+                    .from('cadastros_igreen')
+                    .insert([cadastro])
+                    .select();
+                
+                if (error) throw error;
+                
+                updateProgress(100);
+                
+                setTimeout(() => {
+                    alert('✅ Cadastro enviado com sucesso!\n\n' +
+                          'ID: ' + data[0].id + '\n\n' +
+                          'Documentos recebidos e armazenados com segurança.\n\n' +
+                          'Em breve nossa equipe entrará em contato pelo WhatsApp informado.');
+                    
+                    event.target.reset();
+                    document.getElementById('fileNameFrente').textContent = 'Nenhum arquivo selecionado';
+                    document.getElementById('fileNameFrente').style.color = '#888';
+                    document.getElementById('fileNameVerso').textContent = 'Nenhum arquivo selecionado';
+                    document.getElementById('fileNameVerso').style.color = '#888';
+                    progressDiv.classList.remove('active');
+                }, 500);
+                
+            } catch (error) {
+                console.error('Erro:', error);
+                
+                let errorMessage = '❌ Erro ao enviar cadastro.\n\n';
+                
+                if (error.message.includes('Failed to fetch')) {
+                    errorMessage += 'Verifique sua conexão com a internet.';
+                } else if (error.message.includes('storage')) {
+                    errorMessage += 'Erro no upload das imagens. Verifique se configurou o Storage no Supabase.';
+                } else {
+                    errorMessage += error.message;
+                }
+                
+                alert(errorMessage);
+                progressDiv.classList.remove('active');
+                
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
+        }
     </script>
 </body>
 </html>
