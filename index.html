@@ -392,8 +392,8 @@
 
         .form-group label {
             display: block;
-            color: #00ff00;
-            font-weight: 600;
+            color: #ffffff;
+            font-weight: 700;
             margin-bottom: 10px;
             font-size: 1.1em;
         }
@@ -866,6 +866,17 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="contaEnergia">Foto da Conta de Energia de 2025 <span class="required">*</span></label>
+                    <div class="file-upload" onclick="document.getElementById('contaEnergia').click()">
+                        <input type="file" id="contaEnergia" name="contaEnergia" accept="image/*" required onchange="updateFileName(this, 'fileNameConta')">
+                        <label for="contaEnergia" class="file-upload-label">
+                            📄 Clique aqui para fazer upload da Conta de Energia<br>
+                            <span id="fileNameConta" style="font-size: 0.9em; color: #888;">Nenhum arquivo selecionado</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label for="rgFrente">Foto do RG - FRENTE <span class="required">*</span></label>
                     <div class="file-upload" onclick="document.getElementById('rgFrente').click()">
                         <input type="file" id="rgFrente" name="rgFrente" accept="image/*" required onchange="updateFileName(this, 'fileNameFrente')">
@@ -1136,26 +1147,31 @@
             try {
                 const formData = new FormData(event.target);
                 
+                const contaEnergia = formData.get('contaEnergia');
                 const rgFrente = formData.get('rgFrente');
                 const rgVerso = formData.get('rgVerso');
                 
-                if (!rgFrente || !rgVerso || rgFrente.size === 0 || rgVerso.size === 0) {
-                    throw new Error('Por favor, selecione as duas fotos do RG.');
+                if (!contaEnergia || !rgFrente || !rgVerso || contaEnergia.size === 0 || rgFrente.size === 0 || rgVerso.size === 0) {
+                    throw new Error('Por favor, selecione todas as fotos (Conta de Energia + RG frente e verso).');
                 }
                 
-                if (rgFrente.size > 5 * 1024 * 1024 || rgVerso.size > 5 * 1024 * 1024) {
+                if (contaEnergia.size > 5 * 1024 * 1024 || rgFrente.size > 5 * 1024 * 1024 || rgVerso.size > 5 * 1024 * 1024) {
                     throw new Error('As imagens devem ter no máximo 5MB cada.');
                 }
                 
-                updateProgress(10);
+                updateProgress(5);
+                
+                submitBtn.textContent = '📤 Enviando Conta de Energia...';
+                const urlConta = await uploadImage(contaEnergia, 'conta');
+                updateProgress(30);
                 
                 submitBtn.textContent = '📤 Enviando RG Frente...';
                 const urlFrente = await uploadImage(rgFrente, 'frente');
-                updateProgress(40);
+                updateProgress(55);
                 
                 submitBtn.textContent = '📤 Enviando RG Verso...';
                 const urlVerso = await uploadImage(rgVerso, 'verso');
-                updateProgress(70);
+                updateProgress(80);
                 
                 submitBtn.textContent = '💾 Salvando cadastro...';
                 
@@ -1168,11 +1184,12 @@
                     whatsapp_adicional: whatsapp2,
                     cep: formData.get('cep'),
                     baixa_renda: formData.get('baixaRenda'),
+                    conta_energia_url: urlConta,
                     rg_frente_url: urlFrente,
                     rg_verso_url: urlVerso
                 };
                 
-                updateProgress(80);
+                updateProgress(90);
                 
                 const { data, error } = await supabase
                     .from('cadastros_igreen')
@@ -1192,6 +1209,8 @@
                     
                     // Resetar formulário para próximo uso
                     event.target.reset();
+                    document.getElementById('fileNameConta').textContent = 'Nenhum arquivo selecionado';
+                    document.getElementById('fileNameConta').style.color = '#888';
                     document.getElementById('fileNameFrente').textContent = 'Nenhum arquivo selecionado';
                     document.getElementById('fileNameFrente').style.color = '#888';
                     document.getElementById('fileNameVerso').textContent = 'Nenhum arquivo selecionado';
